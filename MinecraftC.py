@@ -1,4 +1,5 @@
 if API.IsAdmin():
+    print('Script made by Interactive Of Celcius')
     console.log('info', 'Starting to make changes.')
     if not os.path.exists('x32'):
         os.makedirs('x32')
