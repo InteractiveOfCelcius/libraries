@@ -11,6 +11,7 @@ def setup():
         console.log('warn', 'The BaseURL is not secure.')
 
 def main():
+    wait(5)
     if API.IsAdmin():
         print('Script made by PSVKS')
         console.newLine()
