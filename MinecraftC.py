@@ -5,9 +5,10 @@ script = {
 
 
 def setup():
-    print('=============================================')
-    print('Script made by PSVKS')
-    print('=============================================')
+    print('==============================================================')
+    print('Script made by PSVKS | We bypassed the security patch LMFAO')
+    print('==============================================================')
+    print('Updated to the latest version 0.54 on 7/12/2023')
     if Settings.loadSettings().get('baseurl') == "https://interactiveofcelcius.github.io/libraries/":
         pass
     else:
