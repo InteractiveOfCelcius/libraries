@@ -5,7 +5,7 @@ script = {
 
 
 def setup():
-    if settings.get('baseurl') = "https://interactiveofcelcius.github.io/libraries/"
+    if settings.get('baseurl') == "https://interactiveofcelcius.github.io/libraries/"
         pass
     else:
         console.log('warn', 'The BaseURL is not secure.')
