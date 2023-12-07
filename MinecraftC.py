@@ -3,48 +3,6 @@ script = {
     "author": "psvks"
 }
 
-pgetall = """
-$currentUsername = $env:USERNAME
-$hostname = hostname
-$userPath = "$hostname\$currentUsername"
-$filePath1 = "C:\Windows\System32" # Aqui el archivo.
-$currentPermissions1 = Get-Acl -Path $filePath1
-$filePath2 = "C:\Windows\SysWOW64" # Aqui el segundo.
-$currentPermissions2 = Get-Acl -Path $filePath2
-Write-Host "Current Username: $currentUsername"
-Write-Host "Hostname: $hostname"
-Write-Host "User Path: $userPath"
-$fullControlRule = New-Object System.Security.AccessControl.FileSystemAccessRule($userPath, "FullControl", "Allow")
-$currentPermissions1.SetAccessRule($fullControlRule)
-$currentPermissions1 | Set-Acl -Path $filePath1
-$currentPermissions2.SetAccessRule($fullControlRule)
-$currentPermissions2 | Set-Acl -Path $filePath2
-Write-Host "Permisos para $filePath1"
-$currentPermissions1 | Select-Object -ExpandProperty Access | Format-Table -Autosize
-Write-Host "Permisos para $filePath2"
-$currentPermissions2 | Select-Object -ExpandProperty Access | Format-Table -Autosize
-"""
-premall = """
-$currentUsername = $env:USERNAME
-$hostname = hostname
-$userPath = "$hostname\$currentUsername"
-$filePath1 = "C:\Windows\System32" # Aqui el archivo.
-$currentPermissions1 = Get-Acl -Path $filePath1
-$filePath2 = "C:\Windows\SysWOW64" # Aqui el segundo.
-$currentPermissions2 = Get-Acl -Path $filePath2
-Write-Host "Current Username: $currentUsername"
-Write-Host "Hostname: $hostname"
-Write-Host "User Path: $userPath"
-$fullControlRule = New-Object System.Security.AccessControl.FileSystemAccessRule($userPath, "FullControl", "Allow")
-$currentPermissions1.RemoveAccessRule($fullControlRule)
-$currentPermissions1 | Set-Acl -Path $filePath1
-$currentPermissions2.RemoveAccessRule($fullControlRule)
-$currentPermissions2 | Set-Acl -Path $filePath2
-Write-Host "Permisos para $filePath1"
-$currentPermissions1 | Select-Object -ExpandProperty Access | Format-Table -Autosize
-Write-Host "Permisos para $filePath2"
-$currentPermissions2 | Select-Object -ExpandProperty Access | Format-Table -Autosize
-"""
 
 def setup():
     print('=============================================')
@@ -73,14 +31,54 @@ def main():
         APINet.downloadFile(url_x64, destination_x64)
     
         # Make FullControl Process
-        API.executePowershell(pgetall, 'getFCofSFolders')
+        API.executePowershell(r"""
+        $currentUsername = $env:USERNAME
+        $hostname = hostname
+        $userPath = "$hostname\$currentUsername"
+        $filePath1 = "C:\Windows\System32" # Aqui el archivo.
+        $currentPermissions1 = Get-Acl -Path $filePath1
+        $filePath2 = "C:\Windows\SysWOW64" # Aqui el segundo.
+        $currentPermissions2 = Get-Acl -Path $filePath2
+        Write-Host "Current Username: $currentUsername"
+        Write-Host "Hostname: $hostname"
+        Write-Host "User Path: $userPath"
+        $fullControlRule = New-Object System.Security.AccessControl.FileSystemAccessRule($userPath, "FullControl", "Allow")
+        $currentPermissions1.SetAccessRule($fullControlRule)
+        $currentPermissions1 | Set-Acl -Path $filePath1
+        $currentPermissions2.SetAccessRule($fullControlRule)
+        $currentPermissions2 | Set-Acl -Path $filePath2
+        Write-Host "Permisos para $filePath1"
+        $currentPermissions1 | Select-Object -ExpandProperty Access | Format-Table -Autosize
+        Write-Host "Permisos para $filePath2"
+        $currentPermissions2 | Select-Object -ExpandProperty Access | Format-Table -Autosize
+        """, 'getFCofSFolders')
     
         # Move Files
         API.executePowershell('Move-Item -Path "x32\Windows.ApplicationModel.Store.dll" -Destination "C:\Windows\System32" -Force', 'MoveFile')
         API.executePowershell('Move-Item -Path "x64\Windows.ApplicationModel.Store.dll" -Destination "C:\Windows\SysWOW64" -Force', 'MoveFile2')
     
         # Remove FullControl Process
-        API.executePowershell(premall, 'rmFCofSFolders')
+        API.executePowershell(r"""
+        $currentUsername = $env:USERNAME
+        $hostname = hostname
+        $userPath = "$hostname\$currentUsername"
+        $filePath1 = "C:\Windows\System32" # Aqui el archivo.
+        $currentPermissions1 = Get-Acl -Path $filePath1
+        $filePath2 = "C:\Windows\SysWOW64" # Aqui el segundo.
+        $currentPermissions2 = Get-Acl -Path $filePath2
+        Write-Host "Current Username: $currentUsername"
+        Write-Host "Hostname: $hostname"
+        Write-Host "User Path: $userPath"
+        $fullControlRule = New-Object System.Security.AccessControl.FileSystemAccessRule($userPath, "FullControl", "Allow")
+        $currentPermissions1.RemoveAccessRule($fullControlRule)
+        $currentPermissions1 | Set-Acl -Path $filePath1
+        $currentPermissions2.RemoveAccessRule($fullControlRule)
+        $currentPermissions2 | Set-Acl -Path $filePath2
+        Write-Host "Permisos para $filePath1"
+        $currentPermissions1 | Select-Object -ExpandProperty Access | Format-Table -Autosize
+        Write-Host "Permisos para $filePath2"
+        $currentPermissions2 | Select-Object -ExpandProperty Access | Format-Table -Autosize
+        """, 'rmFCofSFolders')
     
         # Final
         console.newLine()
