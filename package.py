@@ -1,3 +1,5 @@
+package_data = {'required_version': '1.0', 'name_package': 'ExamplePackage', 'author': 'AuthorName', 'variable': 'ExampleVariable'}
+
 class Package:
     def __init__(self, package_data):
         self.required_version = package_data.get('required_version', None)
