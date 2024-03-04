@@ -1,1 +1,2 @@
-print('Hi')
+test = Test()
+test.TestFunction()
