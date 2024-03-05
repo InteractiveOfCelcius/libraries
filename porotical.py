@@ -10,4 +10,6 @@ r = requests.get('http://example.com/')
 utils.console.info('Status code from example.com is:', r.status_code)
 utils.console.info('The current path is', os.path())
 
+
+utils.console.info('Current XGIN Executor version is', version)
 sound.playSound(f'{os.path()}/bloxxonova6.mp3')
