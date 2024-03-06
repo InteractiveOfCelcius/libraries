@@ -7,7 +7,7 @@ def program():
   utils = Utils()
   sound = Sound()
   console = utils.Console()
-  os = OS()
+  #os = OS()
   
   ## Testing some functions
   console.info('Hi', 'there')
@@ -16,7 +16,7 @@ def program():
   wait(2)
   r = requests.get('http://example.com/')
   console.info('Status code from example.com is:', r.status_code)
-  console.info('The current path is', os.path())
+  #console.info('The current path is', os.path())
   
   ## Trying to play some random sound in my computer.
   console.info('Current XGIN Executor version is', version)
