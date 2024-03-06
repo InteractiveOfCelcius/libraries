@@ -17,6 +17,8 @@ def program():
   r = requests.get('http://example.com/')
   console.info('Status code from example.com is:', r.status_code)
   console.info('The current path is', os.path())
-  
-  ## Trying to play some random sound in my computer.
   console.info('Current XGIN Executor version is', version)
+  output, error, returncode = os.powershell("Get-Process")
+
+  console.info(output, error, returncode)
+  
