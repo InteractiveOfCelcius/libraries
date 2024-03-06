@@ -1,3 +1,8 @@
+DATA = [
+  "0.01", "porotical"
+]
+
+
 ## Importing libraries.
 utils = Utils()
 sound = Sound()
